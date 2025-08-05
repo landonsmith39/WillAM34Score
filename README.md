@@ -7,5 +7,5 @@ Home - AM is predicted to score at least one goal 51.6%.
 
 I plan to look at team strength next.
 
-October 8 2025 MTL @TOR
+October 8 2025 MTL @ TOR
 Matthews to score with a probability of 51.6%.
