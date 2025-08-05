@@ -1,4 +1,4 @@
-# WillAM34Score
+# Will AM34 Score
 This is a project for my machine learning class. Simple machine learning model investigating whether Auston Matthews will score in his next game.
 
 First I am investigating how much home vs. away affects AM's scoring.
