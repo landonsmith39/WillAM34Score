@@ -1,0 +1,27 @@
+---
+title: "Model"
+author: "Landon Smith"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(caret)
+
+set.seed(123)
+
+trainIndex = createDataPartition(all_data$scored, p = 0.8, list = F)
+train = all_data[trainIndex, ]
+test = all_data[-trainIndex, ]
+
+model = train(scored ~HomeAway,
+              data = train,
+              method = "glm",
+              family = "binomial")
+
+
+
+
+pred_probs = predict(model, newdata = test, type = "raw")
+pred_labels = predict(model, newdata = test)
+```

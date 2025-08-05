@@ -72,6 +72,13 @@ all_data = all_data %>%
 ```
 
 ```{r}
-all_data = all_data %>% 
-  add_row(GameNum = "1", GameCareer = "630", TeamGameNum = "1", Date = "2025-10-8", Team = "TOR", HomeAway = "", Opponent = "MTL")
+#Create a category for scored as a success criteria and make Home/Away binary
+all_data <- all_data %>%
+  mutate(
+    scored = ifelse(G > 0, 1, 0),
+    HomeAway = ifelse(grepl("^@", HomeAway), 0, 1)
+  )
 ```
+
+
+
