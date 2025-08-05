@@ -1,0 +1,77 @@
+---
+title: "DataCleaningAM34"
+author: "Landon Smith"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+#Get the URL's for web scraping
+career = 2017:2025
+source = "https://www.hockey-reference.com/players/m/matthau01/gamelog/"
+urls = paste0(source, career, "/")
+```
+
+
+```{r}
+#scraper and clean out title rows and season total rolls, finally create one big dataframe
+library(rvest)
+library(tidyverse)
+library(janitor)
+
+scraper = function(url, year) {
+  page = read_html(url)
+  tables = page %>% html_table(fill = T)
+  
+  game_data = tables[[1]] %>% 
+    clean_names() %>% 
+    filter(x != "Rk", x != "")
+  return(game_data)
+}
+
+all_data = map2_dfr(urls, career, scraper)
+```
+
+
+```{r}
+#Rename data
+all_data = all_data %>% 
+  rename(GameNum = x,
+    GameCareer = x_2,
+    TeamGameNum = x_3,
+    Date = x_4,
+    Team = x_5,
+    HomeAway = x_6,
+    Opponent = x_7,
+    Result = x_8,
+    G = scoring,
+    A = scoring_2,
+    PTS = scoring_3,
+    PlusMinus = x_9,
+    PIM = x_10,
+    EVG = goals,
+    PPG = goals_2,
+    SHG = goals_3,
+    GWG = goals_4,
+    EVA = assists,
+    PPA = assists_2,
+    SHA = assists_3,
+    SOG = shots,
+    SPCT = shots_2,
+    TSA = shots_3,
+    SHFT = ice_time,
+    TOI = ice_time_2,
+    FOW = faceoffs,
+    FOL = faceoffs_2,
+    FOPCT = faceoffs_3,
+    BLK = x_11,
+    HIT = x_12,
+    TAKE = x_13,
+    GIVE = x_14
+  )
+```
+
+```{r}
+all_data = all_data %>% 
+  add_row(GameNum = "1", GameCareer = "630", TeamGameNum = "1", Date = "2025-10-8", Team = "TOR", HomeAway = "", Opponent = "MTL")
+```
